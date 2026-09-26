@@ -2,11 +2,11 @@ version: 0.2
 
 phases:
   pre_build:
-  commands:
-    - echo "Checking DockerHub credentials"
-    - if [ -z "$username" ]; then echo "USERNAME IS EMPTY"; else echo "USERNAME IS PRESENT"; fi
-    - if [ -z "$password" ]; then echo "PASSWORD IS EMPTY"; else echo "PASSWORD IS PRESENT"; fi
-    - echo "$password" | docker login -u "$username" --password-stdin
+    commands:
+     - echo "Checking DockerHub credentials"
+     - if [ -z "$username" ]; then echo "USERNAME IS EMPTY"; else echo "USERNAME IS PRESENT"; fi
+     - if [ -z "$password" ]; then echo "PASSWORD IS EMPTY"; else echo "PASSWORD IS PRESENT"; fi
+     - echo "$password" | docker login -u "$username" --password-stdin
 
   build:
     commands:
