@@ -23,9 +23,18 @@ phases:
       - docker push akanksha2501/devbank-frontend:v5
 
       - echo Creating imagedefinitions.json
-      - printf '[{"name":"backend","imageUri":"akanksha2501/devbank-backend:v5"}]' > imagedefinitions.json
+      - |
+        if [ "$DEPLOY_TARGET" = "backend" ]; then
+          printf '[{"name":"backend","imageUri":"akanksha2501/devbank-backend:v5"}]' > imagedefinitions.json
+        elif [ "$DEPLOY_TARGET" = "frontend" ]; then
+          printf '[{"name":"frontend","imageUri":"akanksha2501/devbank-frontend:v5"}]' > imagedefinitions.json
+        else
+          echo "ERROR: DEPLOY_TARGET is not set correctly"
+          exit 1
+        fi
 
-      - echo Build completed
+      - echo Generated imagedefinitions.json
+      - cat imagedefinitions.json
 
 artifacts:
   files:
