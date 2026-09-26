@@ -25,7 +25,7 @@ export default function App() {
   const fetchMessage = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/messages"); // Backend URL
+      const res = await fetch("http://54.165.16.54:3001/messages"); // Backend URL
       const data = await res.json();
       setMessage(data.message);
       setBgColor(getRandomColor()); // Change card color
