@@ -9,17 +9,17 @@ phases:
   build:
     commands:
       - echo Building backend image
-      - docker build -t akanksha2501/devbank-backend:v2 ./backend
+      - docker build -t akanksha2501/devbank-backend:v5 ./backend
 
       - echo Building frontend image
-      - docker build -t akanksha2501/devbank-frontend:v3 ./frontend
+      - docker build -t akanksha2501/devbank-frontend:v5 ./frontend
 
   post_build:
     commands:
       - echo Pushing backend image
-      - docker push akanksha2501/devbank-backend:v2
+      - docker push akanksha2501/devbank-backend:v5
 
       - echo Pushing frontend image
-      - docker push akanksha2501/devbank-frontend:v3
+      - docker push akanksha2501/devbank-frontend:v5
 
       - echo Build completed
