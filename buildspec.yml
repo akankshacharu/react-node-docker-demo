@@ -23,7 +23,7 @@ phases:
       - docker push akanksha2501/devbank-frontend:v5
 
       - echo Creating imagedefinitions.json
-      - printf '[{"name":"BackendTF-service","imageUri":"akanksha2501/devbank-backend:v5"}]' > imagedefinitions.json
+      - printf '[{"name":"backend","imageUri":"akanksha2501/devbank-backend:v5"}]' > imagedefinitions.json
 
       - echo Build completed
 
