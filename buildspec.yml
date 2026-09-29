@@ -3,39 +3,35 @@ version: 0.2
 phases:
   pre_build:
     commands:
-     - echo "Checking DockerHub credentials"
-     - if [ -z "$username" ]; then echo "USERNAME IS EMPTY"; else echo "USERNAME IS PRESENT"; fi
-     - if [ -z "$password" ]; then echo "PASSWORD IS EMPTY"; else echo "PASSWORD IS PRESENT"; fi
-     - echo "$password" | docker login -u "$username" --password-stdin
+      - echo "Checking DockerHub credentials"
+      - 'if [ -z "$username" ]; then echo "USERNAME IS EMPTY"; else echo "USERNAME IS PRESENT"; fi'
+      - 'if [ -z "$password" ]; then echo "PASSWORD IS EMPTY"; else echo "PASSWORD IS PRESENT"; fi'
+      - 'echo "$password" | docker login -u "$username" --password-stdin'
 
   build:
     commands:
-      - echo Building backend image
+      - echo "Building backend image"
       - docker build -t akanksha2501/devbank-backend:v5 ./backend
-
-      - echo Building frontend image
+      - echo "Building frontend image"
       - docker build -t akanksha2501/devbank-frontend:v5 ./frontend
 
   post_build:
     commands:
-      - echo Pushing backend image
+      - echo "Pushing backend image"
       - docker push akanksha2501/devbank-backend:v5
-
-      - echo Pushing frontend image
+      - echo "Pushing frontend image"
       - docker push akanksha2501/devbank-frontend:v5
-
-      - echo Creating imagedefinitions.json
+      - echo "Creating imagedefinitions.json"
       - |
-        if [ "$DEPLOY_TARGET" = "backend" ]; then
-          printf '[{"name":"backend","imageUri":"akanksha2501/devbank-backend:v5"}]' > imagedefinitions.json
-        elif [ "$DEPLOY_TARGET" = "frontend" ]; then
-          printf '[{"name":"frontend","imageUri":"akanksha2501/devbank-frontend:v5"}]' > imagedefinitions.json
-        else
-          echo "ERROR: DEPLOY_TARGET is not set correctly"
-          exit 1
-        fi
-
-      - echo Generated imagedefinitions.json
+          if [ "$DEPLOY_TARGET" = "backend" ]; then
+            printf '[{"name":"backend","imageUri":"akanksha2501/devbank-backend:v5"}]' > imagedefinitions.json
+          elif [ "$DEPLOY_TARGET" = "frontend" ]; then
+            printf '[{"name":"frontend","imageUri":"akanksha2501/devbank-frontend:v5"}]' > imagedefinitions.json
+          else
+            echo "ERROR: DEPLOY_TARGET is not set correctly"
+            exit 1
+          fi
+      - echo "Generated imagedefinitions.json"
       - cat imagedefinitions.json
 
 artifacts:
