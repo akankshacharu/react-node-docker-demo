@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Checking DockerHub credentials"
+      - 'if [ -z "$username" ]; then echo "USERNAME IS EMPTY"; else echo "USERNAME IS PRESENT"; fi'
+      - 'if [ -z "$password" ]; then echo "PASSWORD IS EMPTY"; else echo "PASSWORD IS PRESENT"; fi'
+      - 'echo "$password" | docker login -u "$username" --password-stdin'
+
+  build:
+    commands:
+      - echo "Building frontend image"
+      - docker build -t akanksha2501/devbank-frontend:v5 ./frontend
+
+  post_build:
+    commands:
+      - echo "Pushing frontend image"
+      - docker push akanksha2501/devbank-frontend:v5
+      - echo "Creating imagedefinitions.json"
+      - printf '[{"name":"frontend","imageUri":"akanksha2501/devbank-frontend:v5"}]' > imagedefinitions.json
+      - echo "Generated imagedefinitions.json"
+      - cat imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
